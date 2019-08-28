@@ -69,7 +69,7 @@ class IntrumentedTests {
             fun getIdlingResources() = mCountingIdlingResource
 
             const val FRAGMENT_INFO_KEY = "MyBundle"
-            const val API_KEY = "8b9402d1c9c97e138712"
+            const val API_KEY = "GET_YOUR_OWN_KEY"
             const val FRAGMENT_CALCULATOR_INFO_KEY = "calculator"
             const val ONETOONE_FRAGMENT_KEY = "one_to_one"
         }
@@ -180,7 +180,7 @@ class IntrumentedTests {
 
     private fun getOneToOneCurrency() : String
     {
-        val url = "https://free.currconv.com/api/v7/convert?q=AED_GNF&compact=ultra&apiKey=8b9402d1c9c97e138712"
+        val url = "https://free.currconv.com/api/v7/convert?q=AED_GNF&compact=ultra&apiKey=GET YOUR OWN KEY"
         Log.i("URL is: ",url)
         val jsonAnswer= URL(url).readText()
         return "100 AED\n=\n${String.format("%.2f",jsonToText(jsonAnswer).toFloat())} GNF"
