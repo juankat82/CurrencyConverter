@@ -6,4 +6,5 @@ Currency converting API used is currconv, available https://free.currconv.com
 This is the source code and WON'T provide the API KEY required to run your own
 implementation (get your own api key at the mentioned website).
 Feel free to use this code at will. 
+Includes some instrumented espresso tests.
 Hope you like it!
