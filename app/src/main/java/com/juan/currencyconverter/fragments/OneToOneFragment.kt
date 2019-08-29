@@ -57,25 +57,30 @@ class OneToOneFragment : Fragment(){
 
     override fun onResume() {
         super.onResume()
-        mMyData = sharedPreferences!!.getString(ONETOONE_FRAGMENT_KEY,"")
 
+        mMyData = sharedPreferences!!.getString(ONETOONE_FRAGMENT_KEY,"")
         if (!mMyData.equals(""))
         {
             localCurrency = mMyData!!.split("-")[0]
             foreignCurrency = mMyData!!.split("-")[1]
             localPos = mMyData!!.split("-")[2].toInt()
             foreignPos = mMyData!!.split("-")[3].toInt()
-            queryData = mMyData!!.split("-")[4]
+            queryData = if (mMyData!!.split("-")[4].equals("null"))
+                "1 $localCurrency\n=\n1.00 $foreignCurrency"
+            else
+                mMyData!!.split("-")[4]
 
             localCurrencySpinner.setSelection(getCountry(countryNameResource!![localPos]))
             foreignCurrencySpinner.setSelection(getCountry(countryNameResource!![foreignPos]))
             val testToTextView = "${queryData!!.split("=")[0]}=${queryData!!.split("=")[1]}"
+            configTexts()
             resultOneToOneTextView!!.text = testToTextView
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
+
         mMyData = "$localCurrency-$foreignCurrency-$localPos-$foreignPos-$queryData"
         editor!!.putString(ONETOONE_FRAGMENT_KEY,mMyData)
         editor!!.apply()
@@ -97,10 +102,12 @@ class OneToOneFragment : Fragment(){
     private fun configTexts()
     {
         resultOneToOneTextView =
-            if (orientation ==0)
+            if (orientation ==0) {
                 v!!.findViewById(R.id.result_one_to_one_text_view)
-            else
+            }
+            else {
                 v!!.findViewById(R.id.result_one_to_one_text_view_land)
+            }
     }
 
     private fun configButton()
@@ -178,7 +185,11 @@ class OneToOneFragment : Fragment(){
     {
         val jsonAnswer= URL(queryString).readText()
         queryData = "1 $localCurrency\n=\n${String.format("%.2f",jsonToText(jsonAnswer).toFloat())} $foreignCurrency"
-        resultOneToOneTextView!!.text = queryData
+        resultOneToOneTextView
+        GlobalScope.launch(Dispatchers.Main) {
+            configTexts()
+            resultOneToOneTextView!!.text = queryData
+        }
     }
 
     private fun jsonToText(json:String) = JSONObject(json).getString("${localCurrency}_$foreignCurrency")
