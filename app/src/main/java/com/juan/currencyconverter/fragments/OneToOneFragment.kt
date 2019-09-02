@@ -18,7 +18,7 @@ import org.json.JSONObject
 import java.net.URL
 import kotlin.coroutines.CoroutineContext
 
-private const val API_KEY = "USE YOUR OWN KEY"
+private const val API_KEY = ""
 private const val ONETOONE_FRAGMENT_KEY="one_to_one"
 
 class OneToOneFragment : Fragment(){

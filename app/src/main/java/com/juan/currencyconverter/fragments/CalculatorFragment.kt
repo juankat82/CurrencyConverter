@@ -17,7 +17,7 @@ import java.net.URL
 import kotlin.coroutines.CoroutineContext
 import android.view.*
 
-private const val API_KEY = "USE YOUR OWN KEY"
+private const val API_KEY = ""
 private const val FRAGMENT_CALCULATOR_INFO_KEY = "calculator"
 
 class CalculatorFragment : Fragment() {
